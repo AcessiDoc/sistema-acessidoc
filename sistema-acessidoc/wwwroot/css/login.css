@@ -1,0 +1,173 @@
+﻿
+@media screen and (max-width: 767px) {
+    .content-center {
+        flex-direction: column;
+    }
+
+    .content-left,
+    .content-right {
+        padding: 2rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        min-height: 100vh;
+    }
+
+    .content-center {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .content-left {
+        flex: 1;
+        padding: 5rem;
+    }
+
+    .content-right {
+        flex: 1;
+        padding: 8rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .container-nome-sistema {
+        font-size: 2rem;
+    }
+
+    .container-login {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/* CSS - Padrão para componentes da tela de Login */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #6c757d;
+    text-align: center;
+    background: #000000;
+    background: -webkit-linear-gradient(to right, #0f9b0f, #000000);
+    background: linear-gradient(to right, #0f9b0f, #000000);
+}
+
+.container-nome-sistema {
+    color: #FFF;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    text-align: center;
+    font-size: 3.8rem;
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: -90px;
+    margin-right: 80px;
+    margin-left: 80px;
+}
+
+container-frase-sistema {
+    color: #FFF;
+    font-size: 1.2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin-top: 0px;
+    margin-bottom: -1px;
+    margin-right: 80px;
+    margin-left: 80px;
+}
+
+.form-outline input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+}
+
+    .form-outline input:focus {
+        border-color: #007bff;
+    }
+
+    .form-outline input:not(:placeholder-shown) {
+        border-color: #007bff;
+    }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.content-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-left {
+    z-index: 10;
+    color: #ffffff;
+    margin: 0;
+}
+
+.content-right {
+    position: relative;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.container-login {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #006400;
+}
+
+.form-outline {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.container-button {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+button {
+    background-color: #006400;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 6px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #0b1605;
+    }
+
+
+.custom-alert error {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1px;
+    color: #ffffff
+}
+.custom-alert success {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1px;
+    color: #ffffff
+}

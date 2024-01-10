@@ -1,0 +1,166 @@
+﻿@model sistema_acessidoc.Models.Arquivos.Formulario.LivroProvaViewModel
+
+@{
+    ViewData["Title"] = "AcessiDoc";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tela Inicial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <strong><font color="#1f8420" size="5"> AcessiDoc </font></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between mt-2">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AcessoRapido">
+                            <strong><font color="#006400" size="3"> Minhas edições </font></strong>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-options">
+        <section class="wrapper">
+            <div class="container-options-cards">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card text-dark card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?study,study');">
+                            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?study,study" alt="Design de Maneira Criativa Lorem Ipsum Sit Amet Consectetur dipisi?">
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="card-body">
+                                    <small class="card-meta mb-2"><strong>NOVA EDIÇÃO</strong></small>
+                                    <h4 class="card-title mt-0">LIVRO</h4>
+                                    <br />
+                                    <form asp-controller="Home" asp-action="ProcessarFormulario" method="post" enctype="multipart/form-data">
+                                        <p><strong>Selecione o tamanho da fonte e anexe um livro:</strong></p>
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            @if (Model != null)
+                                            {
+                                                <label>
+                                                    <input type="radio" asp-for="Livro.TamanhoFonte" value="18" />
+                                                    18
+                                                </label>
+                                                <label>
+                                                    <input type="radio" asp-for="Livro.TamanhoFonte" value="24" />
+                                                    24
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label>
+                                                    <input type="radio" asp-for="Livro.TamanhoFonte" value="18" />
+                                                    18
+                                                </label>
+                                                <label>
+                                                    <input type="radio" asp-for="Livro.TamanhoFonte" value="24" />
+                                                    24
+                                                </label>
+                                            }
+                                            @Html.ValidationMessageFor(model => 
+                                                                       model.Livro.TamanhoFonte, "", new { @class = "text-white" })
+                                        </div>
+
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            @if (Model != null)
+                                            {
+                                                <input asp-for="Livro.ArquivoUpload" type="file" />
+                                            }
+                                            else
+                                            {
+                                                <input asp-for="Livro.ArquivoUpload" type="file" />
+                                            }
+                                            @Html.ValidationMessageFor(model => 
+                                                                       model.Livro.ArquivoUpload, "", new { @class = "text-white" })
+                                        </div>
+                                        <div class="container-button">
+                                            <button type="submit">Converter livro</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card text-dark card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?book,school');">
+                            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?book,school" alt="Design de Maneira Criativa Lorem Ipsum Sit Amet Consectetur dipisi?">
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div class="card-body">
+                                    <small class="card-meta mb-2"><strong>NOVA EDIÇÃO</strong></small>
+                                    <h4 class="card-title mt-0">PROVA</h4>
+                                    <br />
+                                    <form asp-controller="Home" asp-action="ProcessarFormulario" method="post" enctype="multipart/form-data">
+                                        <p><strong>Selecione o tamanho da fonte e anexe um livro:</strong></p>
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            @if (Model != null)
+                                            {
+                                                <label>
+                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="18" />
+                                                    18
+                                                </label>
+                                                <label>
+                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="24" />
+                                                    24
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label>
+                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="18" />
+                                                    18
+                                                </label>
+                                                <label>
+                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="24" />
+                                                    24
+                                                </label>
+                                            }
+                                            @Html.ValidationMessageFor(model => 
+                                                                       model.Prova.TamanhoFonte, "", new { @class = "text-white" })
+                                        </div>
+
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            @if (Model != null)
+                                            {
+                                                <input asp-for="Prova.ArquivoUpload" type="file" />
+                                            }
+                                            else
+                                            {
+                                                <input asp-for="Prova.ArquivoUpload" type="file" />
+                                            }
+                                            @Html.ValidationMessageFor(model => 
+                                                                       model.Prova.ArquivoUpload, "", new { @class = "text-white" })
+                                        </div>
+                                        <div class="container-button">
+                                            <button type="submit">Converter livro</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
