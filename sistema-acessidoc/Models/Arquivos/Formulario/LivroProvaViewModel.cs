@@ -3,6 +3,5 @@
     public class LivroProvaViewModel
     {
         public Arquivo Livro { get; set; }
-        public Arquivo Prova { get; set; }
     }
 }
