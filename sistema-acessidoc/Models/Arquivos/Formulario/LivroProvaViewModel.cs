@@ -2,8 +2,11 @@
 {
     public class LivroProvaViewModel
     {
-        internal Arquivo Prova;
+ 
+            public Arquivo Prova { get; set; }
+            public IFormFile UploadedProva { get; set; }
+            public int TamanhoFonte { get; set; }
 
-        public Arquivo Livro { get; set; }
+
     }
 }

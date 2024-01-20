@@ -44,7 +44,7 @@
                                     <h4 class="card-title mt-0">PROVA</h4>
                                     <br />
                                     <form asp-controller="Home" asp-action="ProcessarFormulario" method="post" enctype="multipart/form-data">
-                                        <p><strong>Selecione o tamanho da fonte e anexe um livro:</strong></p>
+                                        <p><strong>Selecione o tamanho da fonte e anexe uma prova:</strong></p>
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             @if (Model != null)
                                             {
@@ -57,36 +57,18 @@
                                                     24
                                                 </label>
                                             }
-                                            else
-                                            {
-                                                <label>
-                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="18" />
-                                                    18
-                                                </label>
-                                                <label>
-                                                    <input type="radio" asp-for="Prova.TamanhoFonte" value="24" />
-                                                    24
-                                                </label>
-                                            }
-                                            @Html.ValidationMessageFor(model =>
-                                                                       model.Prova.TamanhoFonte, "", new { @class = "text-white" })
+                                            @Html.ValidationMessageFor(model => model.Prova.TamanhoFonte, "", new { @class = "text-danger"})
                                         </div>
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            @if (Model != null)
-                                            {
-                                                <input asp-for="Prova.ArquivoUpload" type="file" />
-                                            }
-                                            else
-                                            {
-                                                <input asp-for="Prova.ArquivoUpload" type="file" />
-                                            }
-                                            @Html.ValidationMessageFor(model =>
-                                                     model.Prova.ArquivoUpload, "", new { @class = "text-white" })
+                                            <input asp-for="UploadedProva" type="file" />
+                                            @Html.ValidationMessageFor(model => model.UploadedProva, "", new { @class = "text-danger" })
+
                                         </div>
                                         <div class="container-button">
                                             <button type="submit">Iniciar</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -101,3 +83,5 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>
+
+

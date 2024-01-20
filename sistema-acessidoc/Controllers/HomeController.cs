@@ -1,15 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sistema_acessidoc.Models.Arquivos.Formulario;
+using sistema_acessidoc.Services;
 
 namespace sistema_acessidoc.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly FileUploadService _fileUploadService;
+
+        public HomeController(FileUploadService fileUploadService)
+        {
+            _fileUploadService = fileUploadService;
+        }
         public IActionResult Index()
         {
             var viewModel = new LivroProvaViewModel
             {
-                Livro = new Arquivo(),
+
                 Prova = new Arquivo()
             };
 
@@ -26,16 +33,26 @@ namespace sistema_acessidoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (viewModel.Livro != null)
+                var uploadResult = _fileUploadService.UploadFile(viewModel.UploadedProva);
+                if (!uploadResult.Success)
                 {
-                    return RedirectToAction("UploadLivro", "Livro", viewModel.Livro);
+                    ModelState.AddModelError("UploadedProva", uploadResult.Message);
                 }
-                else if (viewModel.Prova != null)
+                else
                 {
-                    return RedirectToAction("UploadLivro", "Prova", viewModel.Prova);
+
                 }
             }
+
+            if (!ModelState.IsValid)
+            {
+                return View("Index", viewModel);
+            }
+
+            ViewBag.SuccessMessage = "Arquivo carregado com sucesso.";
             return View("Index", viewModel);
         }
+
     }
 }
+

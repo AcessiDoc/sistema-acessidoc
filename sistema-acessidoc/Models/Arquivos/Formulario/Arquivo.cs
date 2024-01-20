@@ -22,3 +22,4 @@ namespace sistema_acessidoc.Models.Arquivos.Formulario
         public IFormFile ArquivoUpload { get; set; }
     }
 }
+
