@@ -2,6 +2,8 @@
 {
     public class LivroProvaViewModel
     {
+        internal Arquivo Prova;
+
         public Arquivo Livro { get; set; }
     }
 }
