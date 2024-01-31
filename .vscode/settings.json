@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Acessidoc-NET}/sistema-acessidoc/sistemaCap.db",
+            "name": "sistemaCap",
+            "group": "acessidoc"
+        }
+    ]
+}
