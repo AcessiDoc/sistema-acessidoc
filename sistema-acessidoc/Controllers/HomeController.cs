@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sistema_acessidoc.Models.Arquivos.Formulario;
+using System.Reflection;
 
 namespace sistema_acessidoc.Controllers
 {
@@ -7,30 +8,19 @@ namespace sistema_acessidoc.Controllers
     {
         public IActionResult Index()
         {
-            var viewModel = new LivroProvaViewModel
-            {
-                Prova = new Arquivo()
-            };
-
-            return View(viewModel);
-        }
-
-        public IActionResult AcessoRapido()
-        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult ProcessarFormulario(LivroProvaViewModel viewModel)
+        public IActionResult ProcessarFormulario(IFormFile fileUploader, int tamanhoFonte)
         {
             if (ModelState.IsValid)
             {
-                if (viewModel.Prova != null)
+                if (fileUploader != null)
                 {
-                    return RedirectToAction("UploadLivro", "Prova", viewModel.Prova);
                 }
             }
-            return View("Index", viewModel);
+            return View("Index");
         }
     }
 }

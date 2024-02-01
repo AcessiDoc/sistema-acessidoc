@@ -9,7 +9,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using sistema_acessidoc.Context;
-using sistema_acessidoc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AcessiDocContext>(
     options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
-builder.Services.AddTransient<FileUploadService>();
 
 builder.Services.AddSpaStaticFiles(configuration =>
 {
