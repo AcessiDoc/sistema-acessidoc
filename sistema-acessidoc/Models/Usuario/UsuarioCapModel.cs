@@ -13,12 +13,11 @@ namespace SistemaAcessiDoc.Models
         public string Nome { get; set; }
 
         [Display(Name = "E-mail")]
-        [Required(ErrorMessage = "O campo de e-mail é obrigatório.")]
-        [EmailAddress(ErrorMessage = "Por favor, digite um endereço de e-mail válido.")]
+        [Required(ErrorMessage = "Digite um endereço de e-mail válido.")]
         public string Email { get; set; }
 
         [Display(Name = "Senha")]
-        [Required(ErrorMessage = "O campo senha é obrigatório.")]
+        [Required(ErrorMessage = "A senha é obrigatória!")]
         public string Senha { get; set; }
     }
 }
