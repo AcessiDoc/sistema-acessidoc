@@ -1,18 +1,24 @@
+const https = require('https');
+const FormData = require('form-data');
 const fs = require('fs');
+const axios = require('axios');
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const multer = require('multer');
 const { PDFDocument, rgb } = require('pdf-lib');
 const pdfParse = require('pdf-parse');
 const fontkit = require('@pdf-lib/fontkit');
 
 const app = express();
+app.use(cors());
 const port = 3000;
 const fontBytes = fs.readFileSync('NotoSansSymbols.ttf');
 
 const uploadDir = path.join(__dirname, 'uploads');
 const processedDir = path.join(__dirname, 'processed');
 
+// Verifique se os diretórios existem e crie se não
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -52,13 +58,26 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
+// Criação de uma instância do Axios com o agente de https personalizado
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false // Desativa a verificação de certificado
+});
+
 app.post('/upload', upload.single('document'), async (req, res) => {
+    console.log('Solicitação POST recebida para /upload');
     if (req.fileValidationError) {
         return res.status(400).send(req.fileValidationError);
     }
 
     const filePath = path.join(uploadDir, req.file.filename);
     const desiredFontSize = req.body.fontSize === 'standard' ? FONT_SIZE.standard : FONT_SIZE.enlarged;
+
+    console.log('Caminho do arquivo:', filePath);
+
+    if (!fs.existsSync(filePath)) {
+        console.log('O arquivo não existe.');
+        return res.status(404).send('O arquivo não foi encontrado no servidor.');
+    }
 
     try {
         const existingPdfBytes = fs.readFileSync(filePath);
@@ -84,15 +103,29 @@ app.post('/upload', upload.single('document'), async (req, res) => {
         const outputFilePath = path.join(processedDir, req.file.filename);
         fs.writeFileSync(outputFilePath, newPdfBytes);
 
-        // Envia o arquivo processado para o servidor ASP.NET Core
+        const fileStream = fs.createReadStream(outputFilePath);
+        console.log('FileStream:', fileStream);
+
+        // Verifique se o fontSize foi enviado
+        if (!req.body.fontSize) {
+            console.error('FontSize não foi enviado ou é indefinido');
+            return res.status(400).send('FontSize não foi enviado ou é indefinido');
+        }
+
         const formData = new FormData();
-        formData.append('document', fs.createReadStream(outputFilePath));
+        formData.append('document', fileStream, { filename: path.basename(outputFilePath) });
         formData.append('fontSize', req.body.fontSize);
+
+        console.log('Axios:', axios);
 
         const response = await axios.post('http://localhost:5000/Prova/ProcessarFormulario', formData, {
             headers: {
                 ...formData.getHeaders(),
+                'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, // Importante para multipart
             },
+            httpsAgent, // Adicionando o agente de https à configuração
+            maxContentLength: Infinity,
+            maxBodyLength: Infinity
         });
 
         res.status(response.status).send(response.data);

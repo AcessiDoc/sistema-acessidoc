@@ -42,21 +42,19 @@
                                     <small class="card-meta mb-2"><strong>NOVA EDIÇÃO</strong></small>
                                     <h4 class="card-title mt-0">PROVA</h4>
                                     <br />
-                                    <form id="upload-form" asp-controller="Home" asp-action="ProcessarFormulario" method="post" enctype="multipart/form-data">
+                                    <form id="upload-form" action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
                                         <p><strong>Selecione o tamanho da fonte e anexe uma prova:</strong></p>
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label>
-                                                <input type="radio" asp-for="TamanhoFonte" value="18" />
-                                                18
+                                                <input type="radio" asp-for="TamanhoFonte" name="fontSize" value="18" /> 18
                                             </label>
                                             <label>
-                                                <input type="radio" asp-for="TamanhoFonte" value="24" />
-                                                24
+                                                <input type="radio" asp-for="TamanhoFonte" name="fontSize" value="24" /> 24
                                             </label>
                                             @Html.ValidationMessageFor(model => model.TamanhoFonte, "", new { @class = "text-white" })
                                         </div>
                                         <div data-mdb-input-init class="form-outline mb-4">
-                                            <input asp-for="ArquivoUpload" type="file" />
+                                            <input asp-for="ArquivoUpload" type="file" name="document" />
                                             @Html.ValidationMessageFor(model => model.ArquivoUpload, "", new { @class = "text-white" })
                                         </div>
                                         <div class="container-button">
@@ -75,7 +73,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-    <script src="~/api/App.js" asp-append-version="true"></script>
     <script src="~/api/ProcessarFormulario.js" asp-append-version="true"></script>
 </body>
 </html>
