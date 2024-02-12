@@ -1,8 +1,5 @@
-﻿@model sistema_acessidoc.Models.Arquivos.Formulario.Arquivo
-
-@{
+﻿@{
     ViewData["Title"] = "AcessiDoc";
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -15,64 +12,61 @@
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                <strong><font color="#1f8420" size="5"> AcessiDoc </font></strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between mt-2">
-                <ul class="navbar-nav flex-grow-1">
-                </ul>
-            </div>
+    <div class="container-main">
+        <div class="container-nome-sistema">
+            <strong>
+                <font color="#FFFFF" size="20">
+                    <h1>AcessiDoc</h1>
+                </font>
+            </strong>
         </div>
-    </nav>
-    <div class="container-options">
-        <section class="wrapper">
-            <div class="container-options-cards">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                        <div class="card text-dark card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?study,study');">
-                            <img class="card-img d-none" src="https://source.unsplash.com/600x900/?study,study" alt="Design de Maneira Criativa Lorem Ipsum Sit Amet Consectetur dipisi?">
-                            <div class="card-img-overlay d-flex flex-column">
-                                <div class="card-body">
-                                    <small class="card-meta mb-2"><strong>NOVA EDIÇÃO</strong></small>
-                                    <h4 class="card-title mt-0">PROVA</h4>
-                                    <br />
-                                    <form id="upload-form" action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
-                                        <p><strong>Selecione o tamanho da fonte e anexe uma prova:</strong></p>
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label>
-                                                <input type="radio" asp-for="TamanhoFonte" name="fontSize" value="18" /> 18
-                                            </label>
-                                            <label>
-                                                <input type="radio" asp-for="TamanhoFonte" name="fontSize" value="24" /> 24
-                                            </label>
-                                            @Html.ValidationMessageFor(model => model.TamanhoFonte, "", new { @class = "text-white" })
-                                        </div>
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <input asp-for="ArquivoUpload" type="file" name="document" />
-                                            @Html.ValidationMessageFor(model => model.ArquivoUpload, "", new { @class = "text-white" })
-                                        </div>
-                                        <div class="container-button">
-                                            <button type="submit" id="submitButton">Iniciar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+        <div class="container-bloco-upload">
+            <div class="container-upload">
+                <img src="~/images/—Pngtree—upload icon isolated on background_5104432.png" width="200" />
+            </div>
+            <div class="container-formulario">
+                <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadFile">
+                    <strong>
+                        <font color="#1f8420" size="3">
+                            <p>Selecione o tamanho da fonte, 18 ou 24: </p>
+                        </font>
+                    </strong>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <div class="container-opcoes-upload">
+                            <label>
+                                <input type="number" name="fontSize" placeholder="18" step="6" min="18" max="24" required />
+                            </label>
                         </div>
                     </div>
-                </div>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <div class="container-opcoes-upload">
+                            <strong>
+                                <font color="#1f8420" size="3">
+                                    <p>Selecione um arquivo PDF: </p>
+                                </font>
+                            </strong>
+                            <input type="file" name="files" multiple required />
+                        </div>
+                    </div>
+                    <div class="container-button">
+                        <button type="submit">Converter</button>
+                    </div>
+                </form>
             </div>
-        </section>
+            <footer>
+                @{
+                    var anoAtual = DateTime.Now.Year;
+                }
+                <font color="#FFFFF" size="3">
+                    &copy; @anoAtual - AcessiDoc
+                </font>
+            </footer>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/api/ProcessarFormulario.js" asp-append-version="true"></script>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-    <script src="~/api/ProcessarFormulario.js" asp-append-version="true"></script>
 </body>
 </html>

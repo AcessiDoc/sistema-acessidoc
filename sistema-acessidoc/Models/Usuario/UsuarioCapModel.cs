@@ -1,4 +1,4 @@
-﻿using sistema_acessidoc.Models.Arquivos.Formulario;
+﻿using sistema_acessidoc.Models.Arquivos.InfraestruturaArquivo;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
