@@ -8,6 +8,7 @@
 /// </summary>
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using sistema_acessidoc.Context;
 using sistema_acessidoc.Models.Arquivos.InfraestruturaArquivo;
 
@@ -28,6 +29,7 @@ builder.Services.AddSpaStaticFiles(configuration =>
 // Adiciona a referência a sessão respnsável pela criação da pasta
 // onde os arquivos vindo do cliente serão armazenados
 builder.Services.Configure<ConfigurationFiles>(builder.Configuration.GetSection("ConfigurationDocumentsFolder"));
+builder.Services.AddScoped<EditorArquivos>();
 
 var app = builder.Build();
 
@@ -36,6 +38,14 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+   FileProvider = new PhysicalFileProvider(
+   Path.Combine(Directory.GetCurrentDirectory(), "fonts")),
+   RequestPath = "/fonts"
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

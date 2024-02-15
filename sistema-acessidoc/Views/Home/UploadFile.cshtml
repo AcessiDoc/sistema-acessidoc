@@ -37,6 +37,8 @@
                     </div>
                     <div>
                         <h4>@ViewData["Resultado"]</h4>
+                        <p>Para fazer o download do arquivo processado, clique no link abaixo:</p>
+                        <a href="@ViewData["FileProcessedPath"]">Baixar Arquivo Processado</a>
                         <hr />
                         @if (ViewData["Arquivos"] != null)
                         {

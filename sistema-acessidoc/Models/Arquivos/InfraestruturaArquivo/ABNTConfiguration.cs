@@ -1,5 +1,7 @@
 ﻿using Humanizer;
 using iText.Forms.Form.Element;
+using iText.IO.Font;
+using iText.Kernel.Font;
 
 namespace sistema_acessidoc.Models.Arquivos.InfraestruturaArquivo
 {

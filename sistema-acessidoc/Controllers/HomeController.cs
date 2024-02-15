@@ -11,7 +11,10 @@ namespace sistema_acessidoc.Controllers
     /// Acessidoc - 2024
     /// 
     /// Controlador responsável pelo upload de arquivos vindo do cliente,
-    /// os arquivos são enviados para a pasta wwwroot/arquivosPDF.
+    /// os arquivos são enviados para a pasta wwwroot/arquivosPDF. Será
+    /// utilizado propriedades somente leitura para fazer a injetar os dados
+    /// vindo da camada cliente para o servidor (dados da pasta onde será salvo os
+    /// arquivos estão na classe ConfigurationFiles e no appsettings.json.
     /// 
     /// Seu método UploadFile recebe como parâmetro um arquivo word ou pdf
     /// e um tamanho de fonte do tipo inteiro 18 ou 24, após as verificações
@@ -22,20 +25,27 @@ namespace sistema_acessidoc.Controllers
     /// Quando o envio é feito com sucesso ou um erro ocorre as mensagens
     /// no ViewData são enviadas a view UploadFile, informando o usuário.
     /// 
+    /// **Verificar -> View/UploadFile**
     /// 
     /// </summary>
     
     public class HomeController : Controller
     {
         private readonly ConfigurationFiles _myConfigurationFiles;
+        private readonly ConfigurationFiles _myConfigurationToSavedFiles;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly EditorArquivos _editorArquivos; 
 
-        public HomeController(IWebHostEnvironment webHostEnvironment, IOptions<ConfigurationFiles> myConfigurationFiles)
+        public HomeController(IWebHostEnvironment webHostEnvironment,
+                              IOptions<ConfigurationFiles> myConfigurationFiles,
+                              IOptions<ConfigurationFiles> myConfigurationToSavedFiles,
+                              EditorArquivos editorArquivos)
         {
             _myConfigurationFiles = myConfigurationFiles.Value;
+            _myConfigurationToSavedFiles = myConfigurationToSavedFiles.Value;
             _webHostEnvironment = webHostEnvironment;
+            _editorArquivos = editorArquivos;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -66,9 +76,9 @@ namespace sistema_acessidoc.Controllers
                 return View(ViewData);
             }
 
+            // Valida tamanho máximo do arquivo que poderá ser enviado ao servidor
             long tamanhoDoArquivoEmBytes = files.Sum(file => file.Length);
             var tamanhoDoArquivoEmMegaBytes = ConversorDeBytes.ConverterParaMegaBytes(tamanhoDoArquivoEmBytes);
-
             var verificaTamanhoMaximoArquivo = ConversorDeBytes.VerificarTamanhoMaximoArquivo(tamanhoDoArquivoEmBytes);
 
             if (verificaTamanhoMaximoArquivo == true)
@@ -79,6 +89,7 @@ namespace sistema_acessidoc.Controllers
 
             var filePathName = new List<string>();
 
+            // Cria o caminho do arquivo que será salvo no wwwroot/arquivosPDF
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath,
                                         _myConfigurationFiles.DocumentsFolderName);
 
@@ -91,6 +102,7 @@ namespace sistema_acessidoc.Controllers
 
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
+                        // Salva o stream de dados do arquivo na pasta arquivosPDF
                         await file.CopyToAsync(stream);
                     }
                 }
@@ -104,8 +116,37 @@ namespace sistema_acessidoc.Controllers
             ViewData["Resultado"] = $"{files.Count()} arquivo foi enviado ao servidor, " +
                                     $"com tamanho total de: {tamanhoDoArquivoEmMegaBytes.ToString("N3")} MB";
 
+            // Chamada ao método que processa os arquivos pdf, 
+            // como parametro recebe os dados do arquivo como
+            // um stram e o tamnho da fonte enviada pelo usuário.
+            foreach (var file in filePathName)
+            {
+                try
+                {
+                    await _editorArquivos.ProcessarArquivoPDF(file, fontSize);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    ViewData["Erro"] = $"{ex}, verifique o arquivo e tente novamente!";
+                    return View(ViewData);
+                }
+                catch (IOException ex)
+                {
+                    ViewData["Erro"] = $"{ex}";
+                    return View(ViewData);
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Erro"] = $"{ex}";
+                    return View(ViewData);
+                }
+            }
+
+            // Retorna a view com as informações ao usuário
             ViewBag.Arquivos = filePathName;
-            return View(ViewData);
+            var fileProcessedPath = Path.Combine(_webHostEnvironment.WebRootPath, _myConfigurationFiles.DocumentsSavedFolderName, "documento_processado.pdf");
+            ViewData["FileProcessedPath"] = fileProcessedPath;
+            return View("UploadFile");
         }
     }
 }
